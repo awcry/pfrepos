@@ -29,7 +29,7 @@ def send_photo_changes(message):
     (width, height) = changes_im.size
     frame = changes_im.crop(((310, 696, 1008, height - 550)))
     frame.save('/tmp/changes_frame.png')
-    changes_im1 = Image.open('/bot/pfpgups/tmp/changes_frame.png')
+    changes_im1 = Image.open('/tmp/changes_frame.png')
     (width_frame, height_frame) = changes_im1.size
     part1 = changes_im1.crop(((0, 0, width_frame, 1231)))
     part1.save('/tmp/changes_part1.png')
