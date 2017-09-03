@@ -1,13 +1,11 @@
 
 import config
-#import config_test
 import telebot
 
 from selenium import webdriver
 from PIL import Image
 
 bot = telebot.TeleBot(config.token)
-#bot = telebot.TeleBot(config_test.token)
 
 #@bot.message_handler(content_types=["text"])
 #def repeat_all_messages(message): 
