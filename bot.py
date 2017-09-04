@@ -1,5 +1,5 @@
 
-import config
+import config # main config with token
 import telebot
 
 from selenium import webdriver
@@ -7,9 +7,9 @@ from PIL import Image
 
 bot = telebot.TeleBot(config.token)
 
-#@bot.message_handler(content_types=["text"])
-#def repeat_all_messages(message): 
-    #bot.send_message(message.chat.id, message.text)
+@bot.message_handler(commands=['start'])
+def welcome(message):
+    bot.send_message(message.chat.id, 'Добро пожаловать!')
 
 @bot.message_handler(commands=['rasp'])
 def send_photo(message):
@@ -19,9 +19,17 @@ def send_photo(message):
 @bot.message_handler(commands=['changes'])    
 def send_photo_changes(message):
     bot.send_message(message.chat.id, 'Подождите пару секунд..')
+    photo_part1 = open('changes_part1.png', 'rb')
+    bot.send_photo(message.chat.id, photo_part1)
+    photo_part2 = open('changes_part2.png', 'rb')
+    bot.send_photo(message.chat.id, photo_part2)
+    
+@bot.message_handler(commands=['scriptupdate'])
+def scriptupdate(message):
+    bot.send_message(message.chat.id, 'Выполняется обновление..')
     driver = webdriver.PhantomJS()
     driver.set_window_size(800, 600)
-    driver.get('http://pgups-karelia.ru/edu-process/change-ochno-spo/')
+    driver.get(config.url) # url changes
     driver.save_screenshot('changes.png')
     changes_im = Image.open('changes.png')
     (width, height) = changes_im.size
@@ -34,10 +42,7 @@ def send_photo_changes(message):
     changes_im2 = Image.open('changes_frame.png')
     part2 = changes_im2.crop(((0, 1231, width_frame, height_frame)))
     part2.save('changes_part2.png')
-    photo_part1 = open('changes_part1.png', 'rb')
-    bot.send_photo(message.chat.id, photo_part1)
-    photo_part2 = open('changes_part2.png', 'rb')
-    bot.send_photo(message.chat.id, photo_part2)
+    bot.send_message(message.chat.id, 'Успешно!')
     
 if __name__ == '__main__':
      bot.polling(none_stop=True)
