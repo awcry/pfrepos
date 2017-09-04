@@ -15,6 +15,7 @@ def welcome(message):
 def send_photo(message):
     photo_rasp = open('rasp.png', 'rb')
     bot.send_photo(message.chat.id, photo_rasp)
+    print('RASP...Done ..!')
 
 @bot.message_handler(commands=['changes'])    
 def send_photo_changes(message):
@@ -23,6 +24,7 @@ def send_photo_changes(message):
     bot.send_photo(message.chat.id, photo_part1)
     photo_part2 = open('changes_part2.png', 'rb')
     bot.send_photo(message.chat.id, photo_part2)
+    print('CHANGES...Done ..!')
     
 @bot.message_handler(commands=['scriptupdate'])
 def scriptupdate(message):
@@ -43,6 +45,7 @@ def scriptupdate(message):
     part2 = changes_im2.crop(((0, 1231, width_frame, height_frame)))
     part2.save('changes_part2.png')
     bot.send_message(message.chat.id, 'Успешно!')
+    print('SCRIPTUPDATE...Done ..!')
     
 if __name__ == '__main__':
      bot.polling(none_stop=True)
