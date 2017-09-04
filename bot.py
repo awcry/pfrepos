@@ -2,10 +2,15 @@
 import config # main config with token
 import telebot
 
+from os import environ
+
 from selenium import webdriver
 from PIL import Image
 
 bot = telebot.TeleBot(config.token)
+
+def main():
+    application.listen(environ["PORT"])
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
