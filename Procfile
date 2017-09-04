@@ -1,1 +1,1 @@
-web: python sda.py
+web: python bot.py
