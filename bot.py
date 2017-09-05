@@ -8,9 +8,27 @@ from PIL import Image
 bot = telebot.TeleBot(config.token)
 
 @bot.message_handler(commands=['start'])
-def welcome(message):
-    bot.send_message(message.chat.id, 'Добро пожаловать!')
+def send_welcome(message):
+    markup = telebot.types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+    markup.add('Изменения') 
+    markup.add('Расписание')
+    msg = bot.send_message(message.chat.id, 'Что вам показать?', reply_markup=markup)
+    bot.register_next_step_handler(msg, process_step)
 
+def process_step(message):
+    chat_id = message.chat.id
+    bot.send_message(message.chat.id, 'Хорошо, секунду..')
+    if message.text=='Изменения':
+        photo_part1 = open('changes_part1.png', 'rb')
+        bot.send_photo(message.chat.id, photo_part1)
+        photo_part2 = open('changes_part2.png', 'rb')
+        bot.send_photo(message.chat.id, photo_part2)
+        print('CHANGES with BUTTON...Done ..!')
+    else:
+        photo_rasp = open('rasp.png', 'rb')
+        bot.send_photo(message.chat.id, photo_rasp)
+        print('RASP with BUTTON...Done ..!')
+        
 @bot.message_handler(commands=['rasp'])
 def send_photo(message):
     photo_rasp = open('rasp.png', 'rb')
