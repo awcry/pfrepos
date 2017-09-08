@@ -11,7 +11,6 @@ updatescript_updatetime = 1800
 
 # [UpdateScriptPPK]
 updatescriptPPK_url = 'http://ppk.sampo.ru/student/raspisaniya/341-izmeneniya-k-raspisaniyu-na-16-fevralya-ponedelnik'
-updatescriptPPK_updatetime = 1800
 
 # [Changes]
 chng_file = 'chng.png'

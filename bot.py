@@ -4,8 +4,6 @@
 import config              # main config with token
 import telebot
 from telebot import types  # inline types
-import UpdateScript
-import UpdateScriptPPK
 
 from PIL import Image
 
