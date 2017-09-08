@@ -40,6 +40,7 @@ def process_step_menu(message):
             bot.send_photo(message.chat.id, photo_part1)
             photo_part2 = open(config.chng_part2, 'rb')
             bot.send_photo(message.chat.id, photo_part2)
+            start_menu(message)
             print('User: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' use command: Izmenenuya PF PGUPS') 
         except (OSError, IOError) as e:
             start_menu(message)
