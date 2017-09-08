@@ -4,7 +4,10 @@
 import config              # main config with token
 import telebot
 from telebot import types  # inline types
+import urllib
+import socket
 
+from selenium import webdriver
 from PIL import Image
 
 bot = telebot.TeleBot(config.token)
@@ -80,6 +83,32 @@ def process_step_menu(message):
         bot.send_photo(message.chat.id, beer)
         start_menu(message)
         print('User: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' use command: Beer')
+    elif message.text == 'Создать':
+        try:
+            code = urllib.request.urlopen(config.updatescript_url).getcode()
+            print("{0} - {1}".format(config.updatescript_url, code))
+            codePPK = urllib.request.urlopen(config.updatescriptPPK_url).getcode()
+            print("{0} - {1}".format(config.updatescriptPPK_url, codePPK))
+            if (code not in [200, 301]) or (codePPK not in [200, 301]):
+                print('ERROR: {0} - {1}')
+            else:
+                print('UpdateScript: is in progress..')
+                print('UpdateScriptPPK: is in progress..')
+                driver = webdriver.PhantomJS()
+                driver.set_window_size(800, 600)
+                driver.get(config.updatescript_url) # url changes
+                driver.save_screenshot(config.chng_file)
+                driverPPK = webdriver.PhantomJS()
+                driverPPK.set_window_size(800, 600)
+                driverPPK.get(config.updatescriptPPK_url) # url changes
+                driverPPK.save_screenshot(config.chngPPK_file)
+                start_menu(message)
+                print('UpdateScript: success!')
+                print('UpdateScriptPPK: success!')
+        except socket.error as e:
+            start_menu(message)
+            print('Ping Error: ', e)
+      
 def roma(message):
     if message.text == 'Базаришь?':
         bot.send_message(message.chat.id, 'Конечно')

@@ -1,5 +1,6 @@
 # [MAIN]
 token = '417660676:AAG3HbQJxmF5jgR8GYB5NltjcJH08D5Xh78' # @pfpgupsbot
+#token = '381686223:AAH0cNWU1DG2_yujQT_1diNQejmc4j4eVCY' # @test923bot
 
 # [MENU]
 markup_1 = 'рџ‘ЁвЂЌрџЋ“ РР·РјРµРЅРµРЅРёСЏ'
@@ -7,7 +8,7 @@ markup_2 = 'рџЋ“ Р Р°СЃРїРёСЃР°РЅРёРµ'
 
 # [UpdateScript]
 updatescript_url = 'http://pgups-karelia.ru/edu-process/change-ochno-spo/'
-updatescript_updatetime = 1800
+updatescript_updatetime = 1200 # В данный момент не используется в скрипте
 
 # [UpdateScriptPPK]
 updatescriptPPK_url = 'http://ppk.sampo.ru/student/raspisaniya/341-izmeneniya-k-raspisaniyu-na-16-fevralya-ponedelnik'
