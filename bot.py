@@ -183,142 +183,114 @@ def inline(data_rasp):
     if data_rasp.data == 'П-471':
         photo_rasp = open('p-471.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
         pass
     elif data_rasp.data == 'П-472':
         photo_rasp = open('p-472.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
         pass
     elif data_rasp.data == 'П-469':
         photo_rasp = open('p-469.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
         pass
     elif data_rasp.data == 'П-470':
         photo_rasp = open('p-470.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
         pass
     elif data_rasp.data == 'П-468':
         photo_rasp = open('p-468.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
         pass
     elif data_rasp.data == 'ВТ-518':
         photo_rasp = open('vt-518.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)      
         pass
     elif data_rasp.data == 'ВТ-519,520':
         photo_rasp = open('vt-519.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)        
         pass
     elif data_rasp.data == 'ВТ-516':
         photo_rasp = open('vt-516.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)        
         pass
     elif data_rasp.data == 'ВТ-517':
         photo_rasp = open('vt-517.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)       
         pass
     elif data_rasp.data == 'ВТ-514,515':
         photo_rasp = open('vt-514.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)        
         pass
     elif data_rasp.data == 'Э-289,291':
         photo_rasp = open('e-289.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)        
         pass
     elif data_rasp.data == 'Э-285,287':
         photo_rasp = open('e-285.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)      
         pass
     elif data_rasp.data == 'Э-281,283':
         photo_rasp = open('e-281.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)       
         pass
     elif data_rasp.data == 'Э-279':
         photo_rasp = open('e-279.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)       
         pass
     elif data_rasp.data == 'Д-370,371':
         photo_rasp = open('d-370.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)       
         pass
     elif data_rasp.data == 'Д-372,373':
         photo_rasp = open('d-372.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)        
         pass
     elif data_rasp.data == 'Д-366,367':
         photo_rasp = open('d-366.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)      
         pass
     elif data_rasp.data == 'Д-368,369':
         photo_rasp = open('d-368.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)       
         pass
     elif data_rasp.data == 'Д-364,365':
         photo_rasp = open('d-364.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)     
         pass
     elif data_rasp.data == 'Т-182':
         photo_rasp = open('t-182.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp) 
         pass
     elif data_rasp.data == 'Т-184':
         photo_rasp = open('t-184.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)        
         pass
     elif data_rasp.data == 'Т-178,180':
         photo_rasp = open('t-178.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
         pass
     elif data_rasp.data == 'В-183,185':
         photo_rasp = open('v-183.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)       
         pass
     elif data_rasp.data == 'В-179,181':
         photo_rasp = open('v-179.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
         pass
     elif data_rasp.data == 'В-177':
         photo_rasp = open('v-177.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS') 
         pass
     elif data_rasp.data == 'Ш-288,290':
         photo_rasp = open('sh-288.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)        
         pass
     elif data_rasp.data == 'Ш-280,282':
         photo_rasp = open('sh-280.png', 'rb')
-        bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
+        bot.send_photo(chat_id, photo_rasp)     
         pass
     elif data_rasp.data == 'Ш-284,286':
         photo_rasp = open('sh-284.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
-        print('User: ' + str(chat_id) + '@' + str(us_first) + str(us_last) + ' use command: Raspisanie PF PGUPS')
         pass
     
 if __name__ == '__main__':
