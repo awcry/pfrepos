@@ -1,4 +1,4 @@
 web: python bot.py 
-bot: python bot.py
-updatescript: python updatescript.py
+bot: python bot.py 8443
+
 
