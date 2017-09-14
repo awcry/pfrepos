@@ -1,3 +1,3 @@
 web: python bot.py 
-bot: python bot.py 80
+bot: python bot.py $PORT
 
