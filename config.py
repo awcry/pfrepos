@@ -1,6 +1,5 @@
 # [MAIN]
 token = '417660676:AAG3HbQJxmF5jgR8GYB5NltjcJH08D5Xh78' # @pfpgupsbot
-#token = '381686223:AAH0cNWU1DG2_yujQT_1diNQejmc4j4eVCY' # @test923bot
 
 # [MENU]
 markup_1 = '👨‍🎓 Изменения'
