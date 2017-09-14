@@ -13,7 +13,7 @@ from PIL import Image
 
 bot = telebot.TeleBot(config.token)
 
-WEBHOOK_HOST = 'https://pfpgupsbot.herokuapp.com/'
+WEBHOOK_HOST = 'www.pfpgupsbot.herokuapp.com'
 WEBHOOK_PORT = 443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
 WEBHOOK_LISTEN = '0.0.0.0'  # На некоторых серверах придется указывать такой же IP, что и выше
 
