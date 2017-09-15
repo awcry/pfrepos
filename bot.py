@@ -69,6 +69,14 @@ def create(message):
             print('USER: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' used command: CREATE')
     except socket.error as e:
         print('PING ERROR: ', e)
+        
+@bot.message_handler(func=lambda message: message.text == 'Мне похуй' or message.text == 'мне похуй')
+def mnepoxuy(message):
+    msg = bot.send_message(message.chat.id, 'Мне тоже')
+    bot.register_next_step_handler(msg, roma)
+def roma(message):    
+    if message.text == 'Базаришь?' or  message.text == 'базаришь?' or message.text == 'Базаришь' or message.text == 'базаришь':
+        bot.send_message(message.chat.id, 'Конечно')
        
 @bot.message_handler(func=lambda message: message.text == '🚇 Изменения') 
 def changes(message):
