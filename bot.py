@@ -4,57 +4,45 @@
 import config              # main config with token
 import telebot
 from telebot import types  # inline types
-import cherrypy
+
 import urllib
 import socket
 import time
-import logging
+
 from selenium import webdriver
 from PIL import Image
 
 bot = telebot.TeleBot(config.token)
 
-WEBHOOK_HOST = 'pfpgupsbot.herokuapp.com'
-WEBHOOK_PORT = 443  # 443, 80, 88 ��� 8443 (���� ������ ���� ������!)
-WEBHOOK_LISTEN = '0.0.0.0'  # �� ��������� �������� �������� ��������� ����� �� IP, ��� � ����
+welcome = '💠 Я - бот 🎓 '+'<b>'+'ПФ ПГУПС'+'</b>'+' для Telegram\nЗапущен в '+'<b>'+'тестовом '+'</b>'+'режиме ❕\n\n💠 Умею показывать '+'<b>'+'изменения в расписании'+'</b>'+' и само '+'<b>'+'расписание'+'</b>'+'\n💠 Для начала работы нажмите на 🗳 Меню'+'\n\n🤖 '+'<b>'+'Расскажите друзьям:'+'</b>'+'\n@pfpgupsbot'+'\n\n🖥 '+'<b>'+'Обратная свзязь:'+'</b>'+'\nTelegram '+'<em>'+'+7(911) 402-31-82'+'</em>'
 
-WEBHOOK_SSL_CERT = 'webhook_cert.pem'  # ���� � �����������
-WEBHOOK_SSL_PRIV = 'webhook_pkey.pem'  # ���� � ���������� �����
-
-WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
-WEBHOOK_URL_PATH = "/%s/" % (config.token)
-
-logger = telebot.logger
-telebot.logger.setLevel(logging.INFO)
-
-class WebhookServer(object):
-    @cherrypy.expose
-    def index(self):
-        if 'content-length' in cherrypy.request.headers and \
-           'content-type' in cherrypy.request.headers and \
-           cherrypy.request.headers['content-type'] == 'application/json':
-            length = int(cherrypy.request.headers['content-length'])
-            json_string = cherrypy.request.body.read(length).decode("utf-8")
-            update = telebot.types.Update.de_json(json_string)
-            bot.process_new_updates([update])
-            return ''
-        else:
-            raise cherrypy.HTTPError(403)
-            
 @bot.message_handler(commands=['start'])
 def start_menu(message):
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add('👁 Меню') 
+    markup.add('🗳 Меню','?')
     username = message.from_user.first_name
-    msg = bot.send_message(message.chat.id, 'Выберите Меню', reply_markup=markup) # Текст приветствия
+    msg = bot.send_message(message.chat.id, welcome, reply_markup=markup, parse_mode="HTML")
 
-@bot.message_handler(func=lambda message: message.text == '👁 Меню')
+@bot.message_handler(func=lambda message: message.text == '?')   
+def help(message):
+    bot.send_message(message.chat.id, welcome,parse_mode="HTML")
+    print('USER: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' used command: HELP')
+    
+@bot.message_handler(func=lambda message: message.text == '🗳 Меню')
 def menu(message):
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add(config.markup_1) 
-    markup.add(config.markup_2)
+    markup.add('🚇 Изменения') 
+    markup.add('📒 Расписание')
+    markup.add('🌍 Сайт', '?')
     username = message.from_user.first_name
-    msg = bot.send_message(message.chat.id, 'Чем я могу Вам помочь, ' + username + '?', reply_markup=markup)
+    msg = bot.send_message(message.chat.id, '<b>'+'Чем я могу Вам помочь, ' + username + '?'+'</b>', reply_markup=markup, parse_mode="HTML")
+    
+@bot.message_handler(func=lambda message: message.text == '🌍 Сайт')
+def site(message):   
+    keyboard = types.InlineKeyboardMarkup()
+    url_button = types.InlineKeyboardButton(text='Перейти на ПФ ПГУПС', url='http://pgups-karelia.ru/')
+    keyboard.add(url_button)
+    bot.send_message(message.chat.id, 'Нажми на кнопку и перейди на '+'<b>'+'сайт'+'</b>', reply_markup=keyboard, parse_mode="HTML")
     
 @bot.message_handler(func=lambda message: message.text == 'Создать')
 def create(message):
@@ -78,10 +66,11 @@ def create(message):
             driverPPK.save_screenshot(config.chngPPK_file)
             print('UPDATESCRIPT: success!')
             print('UPDATESCRIPTPPK: success!')
+            print('USER: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' used command: CREATE')
     except socket.error as e:
         print('PING ERROR: ', e)
        
-@bot.message_handler(func=lambda message: message.text == config.markup_1) 
+@bot.message_handler(func=lambda message: message.text == '🚇 Изменения') 
 def changes(message):
     chat_id = message.chat.id
     try:
@@ -104,14 +93,14 @@ def changes(message):
     except (OSError, IOError) as e:
         print('ERROR:', e)
         
-@bot.message_handler(func=lambda message: message.text == config.markup_2)  
+@bot.message_handler(func=lambda message: message.text == '📒 Расписание')  
 def rasp(message):
     rasp_cust_key = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    rasp_cust_key.add('👷‍ Путевое хоз.', '👨‍💻 Комп.сети') 
+    rasp_cust_key.add('👷‍ Путевое хоз.', '💻 Комп.сети') 
     rasp_cust_key.add('🚝 Электроснабж.', '🚃 Орг.перевоз.')
-    rasp_cust_key.add('🚂 Тех.эксп.п.с', '🚇 Авт. и телемех.')
-    rasp_cust_key.add('👁 Меню')
-    msg = bot.send_message(message.chat.id, 'Выбери направление в меню:', reply_markup=rasp_cust_key)
+    rasp_cust_key.add('🚂 Тех.эксп.п.с', '🚄 Авт. и телемех.')
+    rasp_cust_key.add('🗳 Меню', '?')
+    msg = bot.send_message(message.chat.id, 'Выбери '+'<b>'+'направление'+'</b>'+' в меню:', reply_markup=rasp_cust_key, parse_mode="HTML")
     print('USER: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' used command: RASPISANIE PF PGUPS')
     
 @bot.message_handler(func=lambda message: message.text == '👷‍ Путевое хоз.') 
@@ -126,9 +115,9 @@ def put(message):
     kb_rasp.add(types.InlineKeyboardButton('П-471', callback_data='П-471'), types.InlineKeyboardButton('П-472', callback_data='П-472'))
     kb_rasp.add(types.InlineKeyboardButton('П-469', callback_data='П-469'), types.InlineKeyboardButton('П-470', callback_data='П-470'))
     kb_rasp.add(types.InlineKeyboardButton('П-468', callback_data='П-468'))
-    msg = bot.send_message(message.chat.id, 'Выбери группу и нажми на нее:', reply_markup=kb_rasp)
+    msg = bot.send_message(message.chat.id, 'Выбери '+'<b>'+'группу'+'</b>'+' и нажми на нее:', reply_markup=kb_rasp, parse_mode="HTML")
 
-@bot.message_handler(func=lambda message: message.text == '👨‍💻 Комп.сети') 
+@bot.message_handler(func=lambda message: message.text == '💻 Комп.сети') 
 def vte(message):
     global chat_id
     chat_id = message.chat.id
@@ -136,7 +125,7 @@ def vte(message):
     kb_rasp.add(types.InlineKeyboardButton('ВТ-518', callback_data='ВТ-518'), types.InlineKeyboardButton('ВТ-519,520', callback_data='ВТ-519,520'))
     kb_rasp.add(types.InlineKeyboardButton('ВТ-516', callback_data='ВТ-516'), types.InlineKeyboardButton('ВТ-517', callback_data='ВТ-517'))
     kb_rasp.add(types.InlineKeyboardButton('ВТ-514,515', callback_data='ВТ-514,515'))
-    msg = bot.send_message(message.chat.id, 'Выбери группу и нажми на нее:', reply_markup=kb_rasp)
+    msg = bot.send_message(message.chat.id, 'Выбери '+'<b>'+'группу'+'</b>'+' и нажми на нее:', reply_markup=kb_rasp, parse_mode="HTML")
 
 @bot.message_handler(func=lambda message: message.text == '🚝 Электроснабж.') 
 def electro(message):
@@ -145,7 +134,7 @@ def electro(message):
     kb_rasp = types.InlineKeyboardMarkup()
     kb_rasp.add(types.InlineKeyboardButton('Э-289,291', callback_data='Э-289,291'), types.InlineKeyboardButton('Э-285,287', callback_data='Э-285,287'))
     kb_rasp.add(types.InlineKeyboardButton('Э-281,283', callback_data='Э-281,283'), types.InlineKeyboardButton('Э-279', callback_data='Э-279'))
-    msg = bot.send_message(message.chat.id, 'Выбери группу и нажми на нее:', reply_markup=kb_rasp)
+    msg = bot.send_message(message.chat.id, 'Выбери '+'<b>'+'группу'+'</b>'+' и нажми на нее:', reply_markup=kb_rasp, parse_mode="HTML")
 
 @bot.message_handler(func=lambda message: message.text == '🚃 Орг.перевоз.') 
 def dvij(message):
@@ -155,7 +144,7 @@ def dvij(message):
     kb_rasp.add(types.InlineKeyboardButton('Д-370,371', callback_data='Д-370,371'), types.InlineKeyboardButton('Д-372,373', callback_data='Д-372,373'))
     kb_rasp.add(types.InlineKeyboardButton('Д-366,367', callback_data='Д-366,367'), types.InlineKeyboardButton('Д-368,369', callback_data='Д-368,369'))
     kb_rasp.add(types.InlineKeyboardButton('Д-364,365', callback_data='Д-364,365'))
-    msg = bot.send_message(message.chat.id, 'Выбери группу и нажми на нее:', reply_markup=kb_rasp)
+    msg = bot.send_message(message.chat.id, 'Выбери '+'<b>'+'группу'+'</b>'+' и нажми на нее:', reply_markup=kb_rasp, parse_mode="HTML")
 
 @bot.message_handler(func=lambda message: message.text == '🚂 Тех.эксп.п.с') 
 def teh(message):
@@ -165,16 +154,16 @@ def teh(message):
     kb_rasp.add(types.InlineKeyboardButton('Т-182', callback_data='Т-182'), types.InlineKeyboardButton('Т-184', callback_data='Т-184'))
     kb_rasp.add(types.InlineKeyboardButton('Т-178,180', callback_data='Т-178,180'), types.InlineKeyboardButton('В-183,185', callback_data='В-183,185'))
     kb_rasp.add(types.InlineKeyboardButton('В-179,181', callback_data='В-179,181'), types.InlineKeyboardButton('В-177', callback_data='В-177'))
-    msg = bot.send_message(message.chat.id, 'Выбери группу и нажми на нее:', reply_markup=kb_rasp)
+    msg = bot.send_message(message.chat.id, 'Выбери '+'<b>'+'группу'+'</b>'+' и нажми на нее:', reply_markup=kb_rasp, parse_mode="HTML")
 
-@bot.message_handler(func=lambda message: message.text == '🚇 Авт. и телемех.') 
+@bot.message_handler(func=lambda message: message.text == '🚄 Авт. и телемех.') 
 def automat(message):
     global chat_id
     chat_id = message.chat.id
     kb_rasp = types.InlineKeyboardMarkup()
     kb_rasp.add(types.InlineKeyboardButton('Ш-288,290', callback_data='Ш-288,290'), types.InlineKeyboardButton('Ш-280,282', callback_data='1'))
     kb_rasp.add(types.InlineKeyboardButton('Ш-284,286', callback_data='Ш-284,286'))
-    msg = bot.send_message(message.chat.id, 'Выбери группу и нажми на нее:', reply_markup=kb_rasp)    
+    msg = bot.send_message(message.chat.id, 'Выбери '+'<b>'+'группу'+'</b>'+' и нажми на нее:', reply_markup=kb_rasp, parse_mode="HTML")    
     
 @bot.callback_query_handler(func=lambda data_rasp: True)
 def inline(data_rasp):
@@ -289,29 +278,8 @@ def inline(data_rasp):
         photo_rasp = open('sh-284.png', 'rb')
         bot.send_photo(chat_id, photo_rasp)
         pass
-
-# Remove webhook, it fails sometimes the set if there is a previous webhook
-bot.remove_webhook()
-
-# Set webhook
-bot.set_webhook(url=WEBHOOK_URL_BASE+WEBHOOK_URL_PATH,
-                certificate=open(WEBHOOK_SSL_CERT, 'r'))
-
-# Disable CherryPy requests log
-access_log = cherrypy.log.access_log
-for handler in tuple(access_log.handlers):
-    access_log.removeHandler(handler)
-
-# Start cherrypy server
-cherrypy.config.update({
-    'server.socket_host': WEBHOOK_LISTEN,
-    'server.socket_port': WEBHOOK_PORT,
-    'server.ssl_module': 'builtin',
-    'server.ssl_certificate': WEBHOOK_SSL_CERT,
-    'server.ssl_private_key': WEBHOOK_SSL_PRIV
-})
-
-cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})            
-    
+        
+if __name__ == '__main__':
+    bot.polling(none_stop=True)
 
 
