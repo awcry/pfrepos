@@ -49,26 +49,40 @@ def create(message):
     try:
         code = urllib.request.urlopen(config.updatescript_url).getcode()
         print("{0} - {1}".format(config.updatescript_url, code))
-        codePPK = urllib.request.urlopen(config.updatescriptPPK_url).getcode()
-        print("{0} - {1}".format(config.updatescriptPPK_url, codePPK))
-        if (code not in [200, 301]) or (codePPK not in [200, 301]):
+        if (code not in [200, 301]):
             print('ERROR: {0} - {1}')
         else:
             print('UPDATESCRIPT: is in progress..')
-            print('UPDATESCRIPTPPK: is in progress..')
             driver = webdriver.PhantomJS()
             driver.set_window_size(800, 600)
             driver.get(config.updatescript_url) # url changes
             driver.save_screenshot(config.chng_file)
+            bot.send_message(message.chat.id, 'CREATE: DONE!')
+            print('UPDATESCRIPT: success!')
+            print('USER: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' used command: CREATE')
+    except socket.error as e:
+        bot.send_message(message.chat.id, 'CREATE: ERROR!')
+        print('PING ERROR: ', e)
+        
+@bot.message_handler(func=lambda message: message.text == 'Создать ППК')
+def createppk(message):
+    try:
+        codePPK = urllib.request.urlopen(config.updatescriptPPK_url).getcode()
+        print("{0} - {1}".format(config.updatescriptPPK_url, codePPK))
+        if (codePPK not in [200, 301]):
+            print('ERROR: {0} - {1}')
+        else:
+            print('UPDATESCRIPTPPK: is in progress..')
             driverPPK = webdriver.PhantomJS()
             driverPPK.set_window_size(800, 600)
             driverPPK.get(config.updatescriptPPK_url) # url changes
             driverPPK.save_screenshot(config.chngPPK_file)
-            print('UPDATESCRIPT: success!')
+            bot.send_message(message.chat.id, 'CREATE PPK: DONE!')
             print('UPDATESCRIPTPPK: success!')
-            print('USER: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' used command: CREATE')
+            print('USER: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' used command: CREATE PPK')
     except socket.error as e:
-        print('PING ERROR: ', e)
+        bot.send_message(message.chat.id, 'CREATE PPK: ERROR!')
+        print('PING ERROR: ', e)        
         
 @bot.message_handler(func=lambda message: message.text == 'Мне похуй' or message.text == 'мне похуй')
 def mnepoxuy(message):
@@ -99,6 +113,7 @@ def changes(message):
         bot.send_photo(message.chat.id, photo_part2)
         print('USER: ' + str(message.chat.id) + '@' + str(message.from_user.first_name) + str(message.from_user.last_name) + ' used command: CHANGES PF PGUPS') 
     except (OSError, IOError) as e:
+        bot.send_message(message.chat.id, 'Сайт недоступен! Попробуйте позже!')
         print('ERROR:', e)
         
 @bot.message_handler(func=lambda message: message.text == '📒 Расписание')  
